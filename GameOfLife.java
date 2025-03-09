@@ -47,7 +47,7 @@ public class GameOfLife implements Board {
         int count = 0;
         for (int dx = -1; dx <= 1; dx++) {
             for (int dy = -1; dy <= 1; dy++) {
-                if (dx == 0 && dy == 0) continue;
+                if (dx == 0 && dy == 0) continue; // Don't count the cell itself
                 count += get(x + dx, y + dy);
             }
         }
@@ -55,9 +55,10 @@ public class GameOfLife implements Board {
     }
 
     public int get(int x, int y) {
-        int xLimit = board.length;
-        int yLimit = board[0].length;
-        return board[(x + xLimit) % xLimit][(y + yLimit) % yLimit];
+        if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
+            return 0; // Treat out-of-bounds as dead cells
+        }
+        return board[x][y];
     }
 
     public int[][] get() {
