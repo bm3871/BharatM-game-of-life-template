@@ -1,34 +1,34 @@
 import java.util.Arrays;
 
 public class GameOfLife implements Board {
-
-    // Integers: 0 or 1 for alive or dead
     private int[][] board;
-
-    public GameOfLife(int x, int y)
-    {
-        // Construct a 2d array of the given x and y size.
+    
+    public GameOfLife(int x, int y) {
+        board = new int[x][y];
     }
-
-    // Set values on the board
-    public void set(int x, int y, int[][] data) {
-        for (int i = 0; i < data.length; i++) {
-            for (int j = 0; j < data[0].length; j++) {
-                board[i + x][j + y] = data[i][j];
-            }
+    
+    public void run(int turns) {
+        for (int i = 0; i < turns; i++) {
+            step();
         }
     }
-
-    // Run the simulation for a number of turns
-    public void run(int turns) {
-        // call step the number of times requested
-    }
-
-    // Step the simulation forward one turn.
-    public void step()
-    {
-        print();
-        // Update the game board, store a 1 if the cell is alive and a 0 otherwise.
+    
+    public void step() {
+        int[][] newBoard = new int[board.length][board[0].length];
+        
+        for (int x = 0; x < board.length; x++) {
+            for (int y = 0; y < board[0].length; y++) {
+                int neighbors = countNeighbors(x, y);
+                
+                if (board[x][y] == 1) {
+                    newBoard[x][y] = (neighbors == 2 || neighbors == 3) ? 1 : 0;
+                } else {
+                    newBoard[x][y] = (neighbors == 3) ? 1 : 0;
+                }
+            }
+        }
+        
+        board = newBoard;
     }
 
 
