@@ -31,49 +31,37 @@ public class GameOfLife implements Board {
         board = newBoard;
     }
 
-
     public int countNeighbors(int x, int y) {
         int count = 0;
-        // count the number of neighbors the cell has
-        // use the get(x,y) method to read any board state you need.
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = -1; dy <= 1; dy++) {
+                if (dx == 0 && dy == 0) continue;
+                count += get(x + dx, y + dy);
+            }
+        }
         return count;
     }
 
-    // Get a value from the board with "wrap around"
-    // Locations outside the board will loop back into the board.
-    // Ex: -1 will read board.length-1
     public int get(int x, int y) {
         int xLimit = board.length;
-        int yLimit= board[0].length;
-        return board[(x+xLimit)%xLimit][(y+yLimit)%yLimit];
+        int yLimit = board[0].length;
+        return board[(x + xLimit) % xLimit][(y + yLimit) % yLimit];
     }
 
-    // Test helper to get the whole board state
-    public int[][] get()
-    {
+    public int[][] get() {
         return board;
     }
-
-    // Test helper to print the current state
-    public void print(){
-        // Print the header
+    
+    public void print() {
         System.out.print("\n ");
         for (int y = 0; y < board[0].length; y++) {
-            System.out.print(y%10 + " ");
+            System.out.print(y % 10 + " ");
         }
 
         for (int x = 0; x < board.length; x++) {
-            System.out.print("\n" + x%10);
-            for (int y=0; y<board[x].length; y++)
-            {
-                if (board[x][y] == 1)
-                {
-                    System.out.print("⬛");
-                }
-                else
-                {
-                    System.out.print("⬜");
-                }
+            System.out.print("\n" + x % 10);
+            for (int y = 0; y < board[x].length; y++) {
+                System.out.print(board[x][y] == 1 ? "⬛" : "⬜");
             }
         }
         System.out.println();
